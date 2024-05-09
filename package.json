@@ -10,9 +10,11 @@
     "generate-icons": "ts-node generateIconsIndex.ts"
   },
   "dependencies": {
+    "@prisma/client": "^5.13.0",
     "chokidar": "^3.6.0",
     "classnames": "^2.5.1",
     "next": "14.1.4",
+    "prisma": "^5.13.0",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.2.1"
