@@ -10,6 +10,7 @@
     "generate-icons": "ts-node generateIconsIndex.ts"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@prisma/client": "^5.13.0",
     "@radix-ui/themes": "^3.0.3",
     "axios": "^1.6.8",
