@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react'
 import { Button, Table } from '@radix-ui/themes'
 import Link from 'next/link'
 import axios from 'axios'
-import { Spinner } from '@/app/components'
+import { IssueStatusBadge, Spinner } from '@/app/components'
+import { Status } from '@prisma/client'
 
 type issue = {
   id: number
   title: string
   description: string
-  status: string
+  status: Status
   createdAt: string
   updatedAt: string
 }
@@ -59,10 +60,12 @@ const IssuesPage = () => {
               <Table.Row key={issue.id}>
                 <Table.Cell>
                   {issue.title}
-                  <div className="block md:hidden">{issue.status}</div>
+                  <div className="block md:hidden">
+                    <IssueStatusBadge status={issue.status} />
+                  </div>
                 </Table.Cell>
                 <Table.Cell className="hidden md:table-cell">
-                  {issue.status}
+                  <IssueStatusBadge status={issue.status} />
                 </Table.Cell>
                 <Table.Cell className="hidden md:table-cell">
                   {issue.createdAt}
