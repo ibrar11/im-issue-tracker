@@ -5,6 +5,8 @@ import axios from 'axios'
 import { IssueStatusBadge, Spinner } from '@/app/components'
 import { Status } from '@prisma/client'
 import AddIssueButton from './AddIssueButton'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
 type issue = {
   id: number
@@ -17,6 +19,7 @@ type issue = {
 
 const IssuesPage = () => {
   const [issues, setIssues] = useState<issue[]>()
+  const pathname = usePathname()
 
   const getIssues = async () => {
     try {
@@ -38,7 +41,6 @@ const IssuesPage = () => {
   return (
     <div>
       <AddIssueButton />
-      {/* {issues ? ( */}
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
@@ -55,7 +57,14 @@ const IssuesPage = () => {
           {issues?.map((issue) => (
             <Table.Row key={issue.id}>
               <Table.Cell>
-                {issue.title}
+                <Link
+                  href={{
+                    pathname: `/issues/${issue.id}`,
+                    query: { prevPath: pathname },
+                  }}
+                >
+                  {issue.title}
+                </Link>
                 <div className="block md:hidden">
                   <IssueStatusBadge status={issue.status} />
                 </div>
@@ -70,13 +79,6 @@ const IssuesPage = () => {
           ))}
         </Table.Body>
       </Table.Root>
-      {/* ) : (
-        <div className="flex items-center justify-center gap-x-2">
-          <Spinner styles="!text-blue-600 !size-6">
-            <p className="text-2xl font-normal text-blue-600">Loading...</p>
-          </Spinner>
-        </div>
-      )} */}
     </div>
   )
 }
