@@ -1,10 +1,11 @@
 'use client'
 import { IssueStatusBadge } from '@/app/components'
-import { Issue, Status } from '@prisma/client'
+import { Issue } from '@prisma/client'
 import { Heading, Flex, Card, Text } from '@radix-ui/themes'
 import axios from 'axios'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import ReactMarkdown from 'react-markdown'
 
 interface Props {
   params: { id: string }
@@ -41,8 +42,8 @@ const IssueDetailPage = ({ params }: Props) => {
         <IssueStatusBadge status={issue?.status} />
         <Text>{issue?.createdAt.toDateString()}</Text>
       </Flex>
-      <Card>
-        <p>{issue?.description}</p>
+      <Card className="prose" mt="4">
+        <ReactMarkdown>{issue?.description}</ReactMarkdown>
       </Card>
     </div>
   )
