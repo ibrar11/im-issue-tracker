@@ -1,13 +1,11 @@
 'use client'
-import { IssueStatusBadge } from '@/app/components'
 import { Issue } from '@prisma/client'
-import { Pencil2Icon } from '@radix-ui/react-icons'
-import { Heading, Flex, Card, Text, Box, Button, Grid } from '@radix-ui/themes'
+import { Box, Grid } from '@radix-ui/themes'
 import axios from 'axios'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import ReactMarkdown from 'react-markdown'
-import Link from 'next/link'
+import EditIssueButton from './EditIssueButton'
+import IssueDetails from './IssueDetails'
 
 interface Props {
   params: { id: string }
@@ -40,20 +38,10 @@ const IssueDetailPage = ({ params }: Props) => {
   return (
     <Grid columns={{ initial: '1', md: '2' }} gap="5">
       <Box>
-        <Heading>{issue?.title}</Heading>
-        <Flex className="space-x-3" my="2">
-          <IssueStatusBadge status={issue?.status} />
-          <Text>{issue?.createdAt.toDateString()}</Text>
-        </Flex>
-        <Card className="prose" mt="4">
-          <ReactMarkdown>{issue?.description}</ReactMarkdown>
-        </Card>
+        <IssueDetails issue={issue} />
       </Box>
       <Box>
-        <Button>
-          <Pencil2Icon />
-          <Link href={`/issues/${issue?.id}/edit`}>Edit Issue</Link>
-        </Button>
+        <EditIssueButton issueId={issue?.id} />
       </Box>
     </Grid>
   )
