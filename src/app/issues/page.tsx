@@ -2,11 +2,10 @@
 import React, { useEffect, useState } from 'react'
 import { Table } from '@radix-ui/themes'
 import axios from 'axios'
-import { IssueStatusBadge, Spinner } from '@/app/components'
+import { IssueStatusBadge, Link } from '@/app/components'
 import { Issue } from '@prisma/client'
 import AddIssueButton from './AddIssueButton'
 import { usePathname } from 'next/navigation'
-import Link from 'next/link'
 
 const IssuesPage = () => {
   const [issues, setIssues] = useState<Issue[]>()
