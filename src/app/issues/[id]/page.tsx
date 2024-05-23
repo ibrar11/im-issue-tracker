@@ -41,7 +41,7 @@ const IssueDetailPage = ({ params }: Props) => {
         <IssueDetails issue={issue} />
       </Box>
       <Box>
-        <EditIssueButton issueId={issue?.id} />
+        <EditIssueButton issue={issue} />
       </Box>
     </Grid>
   )
