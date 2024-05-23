@@ -3,30 +3,21 @@ import React, { useEffect, useState } from 'react'
 import { Table } from '@radix-ui/themes'
 import axios from 'axios'
 import { IssueStatusBadge, Spinner } from '@/app/components'
-import { Status } from '@prisma/client'
+import { Issue } from '@prisma/client'
 import AddIssueButton from './AddIssueButton'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
-type issue = {
-  id: number
-  title: string
-  description: string
-  status: Status
-  createdAt: string
-  updatedAt: string
-}
-
 const IssuesPage = () => {
-  const [issues, setIssues] = useState<issue[]>()
+  const [issues, setIssues] = useState<Issue[]>()
   const pathname = usePathname()
 
   const getIssues = async () => {
     try {
       const response = await axios.get('/api/issues')
       response?.data.map((issue: any) => {
-        issue.createdAt = new Date(issue.createdAt).toDateString()
-        issue.updatedAt = new Date(issue.updatedAt).toDateString()
+        issue.createdAt = new Date(issue.createdAt)
+        issue.updatedAt = new Date(issue.updatedAt)
       })
       setIssues(response?.data)
     } catch (error) {
@@ -73,7 +64,7 @@ const IssuesPage = () => {
                 <IssueStatusBadge status={issue.status} />
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                {issue.createdAt}
+                {issue.createdAt.toDateString()}
               </Table.Cell>
             </Table.Row>
           ))}
