@@ -8,20 +8,24 @@ import { useForm, Controller } from 'react-hook-form'
 import 'easymde/dist/easymde.min.css'
 import axios from 'axios'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createIssueSchema } from '@/app/validationSchemas'
+import { issueSchema } from '@/app/api/validationSchemas'
 import { z } from 'zod'
 import { ErrorMessage, Spinner } from '@/app/components'
 
-type IssueFormData = z.infer<typeof createIssueSchema>
+type IssueFormData = z.infer<typeof issueSchema>
 
-const IssueForm = () => {
+type IssueFormProps = {
+  id?: string
+}
+
+const IssueForm = ({ id }: IssueFormProps) => {
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<IssueFormData>({
-    resolver: zodResolver(createIssueSchema),
+    resolver: zodResolver(issueSchema),
   })
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -32,7 +36,11 @@ const IssueForm = () => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       setIsSubmitting(true)
-      await axios.post('/api/issues', data)
+      if (queryParams.get('title')) {
+        await axios.patch(`/api/issues/${id}`, data)
+      } else {
+        await axios.post('/api/issues', data)
+      }
       setIsSubmitting(false)
       router.push('/issues')
     } catch (error: any) {
