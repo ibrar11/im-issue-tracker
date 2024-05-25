@@ -8,7 +8,7 @@ import { useForm, Controller } from 'react-hook-form'
 import 'easymde/dist/easymde.min.css'
 import axios from 'axios'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createIssueSchema } from '@/app/validationSchemas'
+import { createIssueSchema } from '@/app/api/validationSchemas'
 import { z } from 'zod'
 import { ErrorMessage, Spinner } from '@/app/components'
 
